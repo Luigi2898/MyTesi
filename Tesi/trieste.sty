@@ -1,0 +1,135 @@
+\ProvidesPackage{trieste}[2002/01/21 v.1.0d opzioni specifiche per Trieste]
+\ifx\StileTrieste\undefined\def\StileTrieste{trieste.sty}\else\expandafter\endinput\fi
+\newif\if@utoretitolo \@utoretitolofalse
+\newif\if@ldstyle \@ldstylefalse
+\DeclareOption{autoretitolo}{\@utoretitolotrue}
+\DeclareOption{oldstyle}{\@ldstyletrue}
+\ProcessOptions
+\def\Candidato{Laureando}
+\def\Candidata{Laureanda}
+\def\Materia#1{\def\@materia{#1}}
+\newcounter{tomo}
+\newcommand*{\tomo}{\clearpage\stepcounter{tomo}\frontespizio}
+\newcommand*{\lapagina}{%
+    \ifnumeriromani
+        \thepage
+    \else
+        \if@ldstyle
+            \expandafter\oldstylenums\expandafter{\thepage}%
+        \else
+            \thepage
+        \fi
+    \fi
+    }
+
+\if@twoside
+    \renewcommand\ps@plain{\let\@mkboth\@gobbletwo
+    \def\@oddfoot{\null\hfill \textbf{\lapagina}\hfill \null}\def\@oddhead{}
+    \def\@evenhead{}\let\@evenfoot\@oddfoot}
+%
+    \renewcommand*{\ps@headings}{\let\@mkboth\markboth%
+    \def\@oddfoot{\null \hfill \textbf{\lapagina} \hfill \null}%
+    \let\@evenfoot\@oddfoot
+%
+    \def\@evenhead{%
+        \setbox\@intesta\hbox{\latintext
+            \footnotesize\rule[-.5ex]{\z@}{\z@}\textsc{%
+                \if@utoretitolo
+                    \@author\ifx\@secondauthor\empty\else\ et al.\fi: \@stitle
+                \else
+                    \leftmark
+                \fi}%
+            }%
+    \ifdim\wd\@intesta>\textwidth
+        \PackageWarning{trieste}{La testata di sinistra e' troppo lunga}%
+    \fi
+    \underline{\makebox[\textwidth]{\box\@intesta}}}%
+    \def\@oddhead{\latintext
+        \setbox\@intesta\hbox{%
+            \footnotesize\rule[-.5ex]{\z@}{\z@}\textsl{\rightmark}}%
+    \ifdim\wd\@intesta>\textwidth \headWarn{\section}\fi%
+    \underline{\makebox[\textwidth]{\box\@intesta}}}%
+    \def\chaptermark##1{\markboth{\thechapter\ -- ##1}{}}%
+    \def\sectionmark##1{\markright{\ifnum \c@secnumdepth >\z@ \thesection\ -- %
+    \fi ##1}}}%
+\else
+    \renewcommand*{\ps@headings}{\let\@mkboth\markboth
+        \def\@oddfoot{\null \hfill \textbf{\lapagina}\hfill \null}%
+        \let\@evenfoot\empty\let\@evenhead\empty
+        \def\@oddhead{{\setbox\z@\hbox{\latintext\footnotesize\textsc{%
+        \if@utoretitolo\@author\ifx\@secondauthor\empty\else\ et al.\fi: \@stitle\fi}}%
+        \setbox\tw@\hbox{\latintext\footnotesize\textsl{\rightmark}}%
+        \dimen@=2em\advance\dimen@\wd\z@\advance\dimen@\wd\tw@
+        \ifdim\dimen@<\textwidth\else
+            \setbox\z@\vbox{\hsize.48\textwidth\parindent\z@\raggedright
+                    \latintext\footnotesize\textsc{%
+                    \if@utoretitolo
+                            \@author\ifx\@secondauthor\empty\else\ et al.\fi: \@stitle
+                    \fi
+                    }}%
+            \setbox\tw@\vbox{\hsize.48\textwidth\parindent\z@\raggedleft
+                            \latintext\footnotesize\textsl{\rightmark}%
+                            }%
+        \fi
+        \setbox\@intesta\vbox to\z@{\vss\hbox to\textwidth{\rule[-.5ex]{\z@}{\z@}\box\z@\hfill\box\tw@}}%
+        \underline{\box\@intesta}}}%
+        \def\chaptermark##1{\markright{\thechapter\ -- ##1}}}
+\fi
+
+\ps@headings
+
+  
+\def\annoaccademico#1{\def\@submitdate{{\large\textsc{Anno accademico}} {\Large\s@tanno#1!}}}
+\def\s@tanno#1-#2!{\oldstylenums{#1\EnDash#2}}
+
+\def\EnDash{{\settowidth{\dimen@}{\large\sc I}%
+\setbox\tw@\hbox{2}\dimen\tw@.5\ht\tw@\advance\dimen\tw@-.5\dp\tw@
+\dimen4\dimen\tw@\advance\dimen4by.0385ex\relax
+\advance\dimen\tw@-.0385ex\relax
+\makebox[1.5\dimen@]{\vrule\@width\dimen@\@height\dimen4\@depth-\dimen\tw@}}}
+  
+\renewcommand\footnoterule{%
+  \kern-6\p@
+  \hrule\@width.4\columnwidth% eventualmente allungare
+  \kern5.6\p@}
+
+\setlength\footnotesep{12\p@}
+\setlength{\skip\footins}{24\p@ \@plus 4\p@ \@minus 2\p@}
+
+\DeclareMathSymbol{*}{\mathalpha}{symbols}{"03} % asterisco e' una lettera;
+                                                % commentare se lo si vuole usare come 
+                                                % operatore binario in matematica;
+                                                % in questo caso non usarne piu'
+                                                % di due nell'argomento facoltativo
+                                                % di \nota
+\newcommand*\nota[1][*]{%
+    \xdef\@thefnmark{\ensuremath{\m@th#1}}\@footnotemark\@footnotetext
+}
+\newcommand*{\NoteWhiteLine}{\par\vspace*{-.3\baselineskip}}
+
+% Richieste strane:
+% 1) Pagina bianca
+% 2) pagina per la dedica
+% 3) pagina per le citazioni argute
+
+\newcommand*\paginavuota{\clearpage\thispagestyle{empty}\null\clearpage}
+
+\newenvironment{dedica}{\errorcontextlines 9%
+    \clearpage\thispagestyle{empty}%
+    \advance\oddsidemargin.5\textwidth
+    \parindent\z@
+    \raggedright\LARGE\itshape
+}{%
+    \clearpage
+}
+
+
+\newenvironment{citazioni}{%
+    \clearpage\thispagestyle{empty}
+    \advance\oddsidemargin.5\textwidth
+    \parindent\z@
+    \raggedright
+}{%
+    \clearpage
+}
+\endinput

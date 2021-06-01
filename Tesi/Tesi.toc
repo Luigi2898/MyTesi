@@ -1,0 +1,4 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Acknowledgments}{{\scriptsize \rm \uppercase {i}}}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
+\contentsline {chapter}{Bibliography}{2}{appendix*.4}%

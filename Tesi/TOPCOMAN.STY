@@ -1,0 +1,84 @@
+%Preparato da Caludio Beccari - Dipartimento di Elettronica
+% Politecnico di Torino
+% Ultimo aggiornamento Settembre 2001
+%
+%       ******************************
+%       *       NUOVI COMANDI        *
+%       ******************************
+%
+% Maiuscole greche "corsive"
+%
+\mathchardef\Gamma="7100
+\mathchardef\Delta="7101
+\mathchardef\Theta="7102
+\mathchardef\Lambda="7103
+\mathchardef\Xi="7104
+\mathchardef\Pi="7105
+\mathchardef\Sigma="7106
+\mathchardef\Upsilon="7107
+\mathchardef\Phi="7108
+\mathchardef\Psi="7109
+\mathchardef\Omega="710A
+%
+\ifx\ensuremath\undefined
+  \newcommand{\ensuremath}[1]{\ifmmode#1\else$#1$\fi}%
+\fi
+\providecommand{\ohm}{\ensuremath{{\rm\Omega}}}
+\providecommand{\ped}[1]{\ensuremath{_{\rm #1}}}
+\providecommand{\unit}[1]{\ensuremath{{\rm\,#1}}}
+\providecommand{\gei}{\ensuremath{{\rm j}}}
+\providecommand{\eu}{\ensuremath{{\rm e}}}
+\providecommand{\micro}{\ensuremath{\mu}}
+\providecommand{\gradi}{\ensuremath{^\circ}}
+%
+% Comando per introdurre un programma in modo verbatim
+%
+\def\listing#1{\par\begingroup
+\programma \input #1 \endgroup}
+\def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}
+\def\programma{\footnotesize\tt \parindent 0pt
+\def\par{\leavevmode\egroup\box0\endgraf}
+\catcode`\`=\active \catcode`\^^I=\active \catcode`\^^L=\active
+\obeylines \uncatcodespecials \obeyspaces
+\everypar{\startbox}}
+\newdimen\tabwidth \setbox0=\hbox{\footnotesize\tt\space} \tabwidth=8\wd0
+\def\startbox{\setbox0=\hbox\bgroup}
+{\obeyspaces\global\let =\ }
+{\catcode`\`=\active \gdef`{\relax\lq}}
+{\catcode`\^^I=\active
+\gdef^^I{\leavevmode\egroup \dimen0=\wd0
+\divide\dimen0 by\tabwidth
+\multiply\dimen0 by\tabwidth
+\advance\dimen0 by\tabwidth
+\wd0=\dimen0 \box0 \startbox}}
+{\catcode`\^^L=\active \gdef^^L{\par\penalty-10000}}
+%
+\mathcode`\,="013B      % Perche` la virgola sia il separatore decimale
+\catcode`\^^Z=10        % Tratta il ^Z come se fosse un blank
+%
+%Numeri romani scritti in maiuscoletto
+%
+\ifx\documentclass\undefined
+\gdef\@roman#1{$\scriptstyle\rm\uppercase\expandafter{\romannumeral #1}$}%
+\else
+\gdef\@roman#1{{\scriptsize\rm\uppercase\expandafter{\romannumeral #1}}}\fi
+
+% Suggerito da Antonio Mele per avere direttamente il nome "figura" o
+% "tabella" inserito automaticamente con lo stesso comando \ref, come avviene
+% nello stile per le tesi dell'Universita' di Chicago. Qui e' esteso per tenere conto
+% della lingua italiana. Inoltre di default questa possibilita' e' disattivata,
+% ma puo' essere attivata o disattivata con i due switch \EnableFigTabNames e
+% \DisableFigTabNames a piacere e quando si vuole. Attenzione: la lingua con cui
+% viene scritto il nome e' quella in vigore quando si scrive il caption e il label
+% dell'oggetto "figura" o "tabella", non la lingua in vigore quando si emette il 
+% comando \ref.
+%
+\def\ft@figure{\ifnum\language=\l@italian\MakeLowercase{\figurename}\else\figurename\fi~}
+\def\ft@table{\ifnum\language=\l@italian\MakeLowercase{\tablename}\else\tablename\fi~}
+
+\newcommand*\EnableFigTabNames{\let\p@figure\ft@figure\let\p@table\ft@table}
+\newcommand*\DisableFigTabNames{\let\p@figure\empty\let\p@table\empty}
+
+\DisableFigTabNames % default
+
+\endinput

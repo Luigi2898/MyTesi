@@ -1,0 +1,133 @@
+\documentclass[12pt,twoside]{report}
+%\documentclass[12pt,openright]{report}
+
+%\usepackage[italian]{babel}
+\usepackage[english]{babel}         %  Package con le regole di sillabazione (italiano)
+\usepackage{toptesi}                %  File di stile per le tesi, by CB
+
+\usepackage[latin1]{inputenc}       %  Per usare i font nuovi
+\usepackage{graphicx}               %  Pacchetto per l'inserzione di figure post-script
+\usepackage{subfigure}              %  Per mettere piu` immagini una accanto all'altra
+\usepackage{booktabs}               
+\usepackage{amsfonts}               %  Pacchetto speciale per i font matematici AMS
+\usepackage{amssymb}                %  Pacchetto speciale per i simboli matematici AMS
+\usepackage{colortbl}
+\usepackage{rotating} 
+\usepackage{xcolor}
+\usepackage{bm}                     %  Il modo per realizzare simboli matematici in neretto
+\usepackage{listings}               %  Per includere in modo semplice i listati in appendice
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+\makeatother
+%\usepackage{titlesec}
+%\titleformat{\chapter}[display]
+%    {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+%\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+\usepackage{caption}
+\usepackage{float}
+\hypersetup{%
+    pdfpagemode={UseOutlines},
+    bookmarksopen,
+    pdfstartview={FitH},
+    colorlinks,
+    linkcolor={blue},
+    citecolor={red},
+    urlcolor={blue}
+  }
+  
+
+  
+  %% Impostazioni per codici VHDL %%
+\lstset{basicstyle=\scriptsize\ttfamily, numbersep=2pt, showspaces=false, showstringspaces=false, showtabs=false,frame=\single, breakatwhitespace = true, numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}
+\lstset{backgroundcolor=\color{green!6}}
+\lstset{morecomment=[s][\color{blue}]{/*}{*/}}
+
+%% Impostazioni per i i codici MatLab
+\lstloadlanguages{Matlab}
+\lstset{% general command to set parameter(s)
+basicstyle = \scriptsize\ttfamily, % print whole listing small
+keywordstyle = \color{blue},% blue keywords
+identifierstyle =, % nothing happens
+commentstyle = \color{green}, % comments
+stringstyle = \ttfamily, % typewriter type for strings
+showstringspaces = false, % no special string spaces
+firstnumber = 1, % numero della prima linea
+numbers = left, %  show number_line
+numberstyle = \tiny, % style of number_line
+stepnumber = 5, % one number_line after stepnumber
+numbersep = 5pt,
+language = {Matlab}, % per riconoscere la sintassi matlab
+extendedchars = true, % per abilitare caratteri particolari
+breaklines = true, % per mandare a capo le righe troppo lunghe
+breakautoindent = true, % indenta le righe spezzate
+breakindent = 30pt, % indenta le righe di 30pt
+}
+
+%% Impostazioni per codici C %%
+\lstset{basicstyle=\scriptsize\ttfamily, numbersep=1pt, showspaces=false, showstringspaces=false, showtabs=false,frame=\single, breakatwhitespace = true, numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}
+\lstset{backgroundcolor=\color{green!4}}
+\lstset{morecomment=[s][\color{blue}]{/*}{*/}}
+\lstset{language=c++, basicstyle=\ttfamily\scriptsize, keywordstyle=\color{blue}, stringstyle=\color{red}, commentstyle=\color{green}\ttfamily}
+
+%listato serve a cambiare la dimensione del carattere nelle appendici con listati
+\newenvironment{listato}{\footnotesize}
+                        {\normalsize }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\facolta{Ingegneria dell'Informazione}
+\corsodilaurea{Ingegneria Elettronica}          % INSERIRE CORSO DI LAUREA
+
+\titolo{Quantum techniques for solving Quadratic Unconstrained Binary Optimisation Problems}                           % INSERIRE TITOLO DELLA TESI
+
+\relatore{Prof. Maurizio \textsc{Zamboni}}                         % INSERIRE IL NOME DEL PRIMO RELATORE
+\secondorelatore{Prof. Mariagrazia \textsc{Graziano}}                 % INSERIRE IL NOME DEL SECONDO (eventuale) RELATORE
+\terzorelatore{Prof. Giovanna \textsc{Turvani}}                   % INSERIRE IL NOME DEL TERZO (eventuale) RELATORE
+
+\candidato{Luigi \textsc{Giuffrida}}                       % INSERIRE IL NOME DEL PRIMO TESISTA
+%\candidata{}                       % INSERIRE IL NOME DELLA PRIMA TESISTA
+%\secondocandidato{}                % INSERIRE IL NOME DEL SECONDO (eventuale) TESISTA
+               % INSERIRE IL NOME DELLA SECONDA (eventuale) TESISTA
+%\terzocandidato{}                  % INSERIRE IL NOME DEL TERZO (eventuale) TESISTA
+%\terzacandidata{}                  % INSERIRE IL NOME DELLA TERZA (eventuale) TESISTA
+\sedutadilaurea{Marzo 2021}
+\logosede{imm/polito_logo_2021.png}
+
+
+\begin{document}
+%\inglese\setcaptions
+\frontespizio
+\ringraziamenti
+%\begin{center}
+                           
+%\include{new_chapters/sommario}
+%\tablespagetrue
+\figurespagetrue
+                          		% INSERIRE IL NOME DEL FILE CONTENENTE IL SOMMARI
+\indici
+% L'ELENCO DELLE FIGURE E L'ELENCO DELLE TABELLE VENGONO INSERITI AUTOMATICAMENTE, SE SI VUOLE DISABILITARE QUESTA OPZIONE UTIZZARE I COMANDI \figurespagefalse E \tablespagetrue ALL'INTERNO DEL FILE toptesi.sty. ATTENZIONE I COMANDI SONO GIA' PRESENTI NEL FILE, COMMENTARLI A PIACERE ALL'OCCORRENZA.
+
+
+%\include{new_chapters/10_fault_analysis}%I need to add this part.
+
+%\doublespacing
+\onehalfspacing
+
+\include{chapters/introduction}
+
+\appendix                          
+
+%\include{appendix/conclusione}                         
+
+\bibliography{bibliografia}   
+%\include{new_chapters/bibli}                 
+%\bibliographystyle{QUICKtran}          
+\bibliographystyle{unsrt}          
+
+\end{document}
